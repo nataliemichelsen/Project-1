@@ -7,12 +7,94 @@
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="materialize.css"  media="screen,projection"/>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Document</title>
     
 </head>
-<body>
+<body class="container">
+  <div class="row">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">Logo</a>
+      </div>
+    </nav>
+  </div>
+  <div class="row">
+    <aside class="col s4 md3 l3 aside">
+      <center><a href="#" class="brand-logo center" style="color: black;"><img width="100" src=""></a></center>
+      <input type="search" id="stockSearch" placeholder="Search">
+      <button class="btn waves-effect waves-dark" type="submit" name="action">Search
+        <i class="material-icons right">send</i>
+      </button>      
+      <div class="collection">
+        <a href="#!" class="collection-item">company</a>
+        <a href="#!" class="collection-item active">company</a>
+        <a href="#!" class="collection-item">company</a>
+        <a href="#!" class="collection-item">company</a>
+      </div>
+    </aside>
+    <main class="col s8 md9 l9">
+      <div class="row">
+        <button class="nav-button">top 3</button>
+        <button class="nav-button">favorite</button>
+      </div>
+      <div class="company-fav">
+        <div class="row">
+            <div class="col s4 m4 l4">
+              <div class="card">
+                <div class="card-content">
+                  <h4 class="card-title">Company Name</h4>
+                  <h5 class="stockPrice">$3924</h5>
+                  <p class="other">Other info</p>
+                </div>
+              </div>
+            </div>
+            <div class="col s4 m4 l4">
+              <div class="card">
+                <div class="card-content">
+                  <h4 class="card-title">Company Name</h4>
+                  <h5 class="stockPrice">$3924</h5>
+                  <p class="other">Other info</p>
+                </div>
+              </div>
+            </div>
+            <div class="col s4 m4 l4">
+              <div class="card">
+                <div class="card-content">
+                  <h4 class="card-title">Company Name</h4>
+                  <h5 class="stockPrice">$3924</h5>
+                  <p class="other">Other info</p>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="news">
+        <!-- <div class="container"> -->
+          <div class="row newsArticle">
+            article1
+          </div>
+          <div class="row newsArticle">
+            article2
+          </div>
+          <div class="row newsArticle">
+            article3
+          </div>
+          <div class="row newsArticle">
+            article4
+          </div>
+          <div class="row newsArticle">
+            article5
+          </div>
+        <!-- </div> -->
+
+      </div>
+    </main>
+  </div>
     
-<script src="script.js"> </script>
+  <script src="script.js"> </script>
 </body>
 </html>
