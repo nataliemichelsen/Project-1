@@ -87,8 +87,8 @@ function getStockInfo(stock) {
       console.log(resp);
       console.log(Object.entries(resp["Time Series (30min)"]));
 
-      for(let i = Object.entries(resp["Time Series (30min)"]); i > (Object.entries(resp["Time Series (30min)"]) - 10); i--){
-        console.log("my i", i);
+      for(let i = 0; i < 13; i++){
+        console.log("my i", Object.entries(resp["Time Series (30min)"])[i]);
       }
 
     } else {
@@ -188,9 +188,9 @@ function getSearch(query){
   });
 }
 
-$(".collection-item").on(function() {
-$("#collection").append(`<a href="#!" ${this}`)
-});
+// $(".collection-item").on(function() {
+// $("#collection").append(`<a href="#!" ${this}`)
+// });
 
 $( document ).ready(function() {
   
