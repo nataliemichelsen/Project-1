@@ -1,49 +1,57 @@
 body{
-  background-color: #111;
+  background-color: #222;
+  margin-top: 14px;
+  margin-bottom: 14px;
 }
 .collection-item{
-  color: #B401FC;
+  color: #6c2a7f;
 }
-.nav-button{
-  background-color: #B401FC;
-  opacity: 74%;
+/* .nav-button{
+  background-color: #6c2a7f;
   width: 20%;
   padding: 10px;
-  margin-bottom: 0px
+  border: 0;
+  transition-duration: 0.8s;
+} */
+button:focus{
+    background-color: white;
 }
 
 .row {
- background-color: #111;
+ background-color: #222;
 }
 
 .collection .collection-item.active {
-  background-color: #B401FC;
+  background-color: #6c2a7f;
   color: black;
 }
 
 .collection a.collection-item {
-  color:#B401FC;
+  color:#6c2a7f;
 }
 
 .card {
-  background-color: #B401FC;
-  opacity: 74%;
+  margin:0;
+  background-color: #6c2a7f;
 }
 
 .newsArticle {
-  background-color: white;
-  padding: 20px;
+  padding: 5px;
   font-family: sans-serif;
   font-style: normal;
-  color:#B401FC;
+  color:#000;
+  border-bottom:1px solid #6c2a7f;
+  display: flex;
 }
 
-.card-title {
-  color: #222;
+
+
+.card .card-title {
+  color: #222222;
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bolder;
-  font-size: large;
+  font-size: 38px;
 }
 
 .stockPrice {
@@ -61,29 +69,93 @@ body{
   text-align: center;
 }
 .btn{
-  background-color: #B401FC;
+  background-color: #6c2a7f;
   color: black;
-  opacity: 74%;
 }
 .collection{
   border-style: solid;
   border-width: 2px;
-  border-color: #B401FC;
+  border-color: #6c2a7f;
 }
 #stockSearch{
 background-color: white;
 }
 .nav-wrapper{
-  background-color: #111;
+  background-color: #222222;
 }
 
 .aside{
   background:#fff;
+  opacity: 0.85;
 }
 .news{
-  margin-left: 10px;
-  margin-right: 10px;
+  background: #fff;
+  padding: 5px;
+  opacity: 0.90;
 }
 .nav-buttons{
   margin-bottom: 0;
+}
+
+.top3{
+}
+
+
+.logo{
+  background:#6c2a7f;
+  border-radius:150px;
+  padding:10px;
+  box-shadow:0;
+  transition:background 2s, box-shadow 2s;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  align-content: center;
+  width:120px;
+  
+}
+.logo:hover{
+  background:#eee;
+  box-shadow:-5px 5px 10px #000;
+  transition:background 2s, box-shadow 2s;
+}
+
+.logo span{
+display:block;
+width:100px;
+height:100px;
+border-radius:150px;
+background:url(logo.png);
+background-size:cover;
+box-shadow:0;
+transition:box-shadow 2s, width 2s, height 2s;
+}
+.logo span:hover{
+box-shadow:inset 10px 10px 15px lightyellow;
+transition:box-shadow 2s, width 2s, height 2s;
+}
+
+.thumbnail{
+  float:left;
+  clear:both;
+  border: 1px solid #6c2a7f;
+  margin:0 5px 0 0;
+}
+
+.p{
+  margin:0;
+}
+
+.time{
+  color:grey;
+}
+.up {
+  color: greenyellow;
+  text-align: center;
+}
+
+.down {
+  color: red;
+  text-align: center;
 }
