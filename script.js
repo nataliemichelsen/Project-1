@@ -1,4 +1,4 @@
-var key = '0IA37F9JE1OFIMZM'
+var key = 'VIW8O2VZ5QQ06ZVI'
 var comp = "GSPC"
 // wanted companies DJI, NDAQ, GSPC
 var queryURL = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${comp}&apikey=${key}`
@@ -13,18 +13,17 @@ function getNews() {
     method: "GET"
   }).then(function (resp) {
     console.log(resp)
-    for(var i=0; i<5; i++){
-      var article = $(`<a href="${resp.articles[i].url}" target="_blank">
-      <div class="newsArticle">
-      <img class="thumbnail" width="180" src="${resp.articles[i].urlToImage}"/>
-      <p class="p">${resp.articles[i].description}<br/>
-      <span class="time">Published on ${resp.articles[i].publishedAt} <br/>By: ${resp.articles[i].author}</span></p>
-      </div></a>`);
-      $(".news").append(article);
+    for(var i=0; i<resp.articles.length; i++){
+      if(resp.articles[i].urlToImage !== null){
+        var article = $(`<a href="${resp.articles[i].url}" target="_blank">
+        <div class="newsArticle">
+        <img class="thumbnail" width="180" src="${resp.articles[i].urlToImage}"/>
+        <p class="p">${resp.articles[i].title}<br/>
+        <span class="time">Published on ${resp.articles[i].publishedAt} <br/>By: ${resp.articles[i].author}</span></p>
+        </div></a>`);
+        $(".news").append(article);
+      }
     }
-
-
-
   }).catch(function (error) {
     console.log(error.statusText);
   });
@@ -33,49 +32,110 @@ function getNews() {
 function getTopThree() {
   var key = '0OGUB3H5NFMSGVIS'
   var comp = ["DJI", "NDAQ", "GSPC"];
-  for (i in comp) {
+  var myClass = "up";
+  for (let i in comp) {
     var topURL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + comp[i] + "&apikey=0IA37F9JE1OFIMZM";
     $.ajax({
       url: topURL,
       method: "GET"
     }).then(function (resp) {
       if (resp.Note === undefined) {
-        var myClass = "up";
-        if(Object.entries(resp["Global Quote"])[9][1].startsWith("-")){
-           myClass = "down";
-        }
-        $("#listCompany").append(`<div class="col s4 m4 l4">
-        <div class="card">
-          <div class="card-content">
-            <h4 class="card-title">${Object.entries(resp["Global Quote"])[0][1]}</h4>
-            <h5 class="stockPrice">$${~~Object.entries(resp["Global Quote"])[4][1]}</h5>
-            <p class="${myClass}">${Object.entries(resp["Global Quote"])[9][1]}</p>
-          </div>
-        </div>
-      </div>`);
+        var stockPrice = Number(Object.entries(resp["Global Quote"])[4][1]).toFixed(2);
+        var stockPerformace = Object.entries(resp["Global Quote"])[9][1];
+        saveTopThree(stockPrice, stockPerformace);
       } else {
+        var stockPrice = Number(JSON.parse(localStorage.getItem("prices"))[i]).toFixed(2);
+        var stockPerformace = JSON.parse(localStorage.getItem("performances"))[i];
         console.log("limited queries");
+        console.log(localStorage.getItem("prices"));
       }
+
+      if(stockPerformace > 0 && stockPerformace[i].startsWith("-")){
+         myClass = "down";
+      }
+      $("#listCompany").append(`<div class="col s4 m4 l4">
+      <div class="card">
+        <div class="card-content">
+          <h4 class="card-title">${comp[i]}</h4>
+          <h5 class="stockPrice">$` + stockPrice + `</h5>
+          <p class="${myClass}">${stockPerformace}</p>
+        </div>
+      </div>
+    </div>`);
     }).catch(function (error) {
-      console.log(error.statusText);
+      console.log(error);
     });
   }
 }
 
+var prices = [];
+var performances = [];
+function saveTopThree(price, performance){
+  prices.push(price);
+  performances.push(performance);
+  localStorage.setItem("prices", JSON.stringify(prices));
+  localStorage.setItem("performances", JSON.stringify(performances));
+}
+
 function getStockInfo(stock) {
-  var stockURL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=60min&outputsize=compact&apikey=0IA37F9JE1OFIMZM"
+  var stockURL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=30min&outputsize=compact&apikey=0IA37F9JE1OFIMZM"
   $.ajax({
     url: stockURL,
     method: "GET"
   }).then(function (resp) {
     if (resp.Note === undefined) {
-      console.log(resp["Time Series (60min)"].length());
+      console.log(resp);
+      console.log(Object.entries(resp["Time Series (30min)"]));
+
+      for(let i = Object.entries(resp["Time Series (30min)"]); i > (Object.entries(resp["Time Series (30min)"]) - 10); i--){
+        console.log("my i", i);
+      }
+
     } else {
       console.log("limited queries");
     }
   }).catch(function (error) {
-    //console.log(error.statusText);
+    console.log(error.statusText);
   });
+}
+
+function graph(){
+  var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: 'Price in U.S. dollar',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 }
 
 function addToFavorite(item) {
@@ -98,6 +158,7 @@ function addToFavorite(item) {
   }
 }
 
+
 function getFavorites() {
   var favorites = JSON.parse(localStorage.getItem("favorites"));
   if (favorites === null) {
@@ -110,25 +171,32 @@ function getFavorites() {
 }
 
 function getSearch(query){
+  $("#search-results").empty();
   $.ajax({
     url: `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${query}&apikey=0IA37F9JE1OFIMZM`,
     method: "GET"
   }).then(function (resp) {
-    console.log(resp.bestMatches);
-    for (let [key, value] of Object.entries(resp.bestMatches)) {
-      console.log(`${key}: ${value}`);
+    console.log(resp);
+    for(var i=0;i<Object.entries(resp.bestMatches).length;i++){
+      $("#search-results").append(`<a href="#!" onclick="addToFavorite('${Object.entries(resp.bestMatches[i])[0][1]}')" class="collection-item">(${Object.entries(resp.bestMatches[i])[0][1]}) ${Object.entries(resp.bestMatches[i])[1][1]}</a>`);
+      console.log(Object.entries(resp.bestMatches[i])[1][1]);
+      
     }
+    
   }).catch(function (error) {
     //console.log(error.statusText);
   });
 }
 
-
+$(".collection-item").on(function() {
+$("#collection").append(`<a href="#!" ${this}`)
+});
 
 $( document ).ready(function() {
   
   getNews();
-  getTopThree();
+  //getTopThree();
+  getStockInfo("IBM");
 
   $("#search-form").on("submit", function(event){
       event.preventDefault();
@@ -140,5 +208,6 @@ $( document ).ready(function() {
 });
 
 
-//getStockInfo("IBM");
+
+
   // getFavorites("IBM");
