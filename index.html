@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="materialize.css" media="screen,projection" />
@@ -37,16 +38,12 @@
           <i class="material-icons right">search</i>
         </button>
       </form>
-        <div class="collection">
-          <a href="#!" class="collection-item">company</a>
-          <a href="#!" class="collection-item active">company</a>
-          <a href="#!" class="collection-item">company</a>
-          <a href="#!" class="collection-item">company</a>
+        <div id="search-results" class="collection">
         </div>
         <h4>Your Favorites</h4>
         <div class="collection">
           <a href="#!" class="collection-item">company</a>
-          <a href="#!" class="collection-item active">company</a>
+          <a href="#!" class="collection-item">company</a>
           <a href="#!" class="collection-item">company</a>
           <a href="#!" class="collection-item">company</a>
         </div>
@@ -65,6 +62,18 @@
 
           <!-- </div> -->
 
+        </div>
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <div class="card">
+              <div class="company-info">
+                <h3>(f)  Ford</h3>
+                <h5>$6.28  -0.28%</h5>
+                
+              </div>
+              <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+          </div>
         </div>
       </main>
     </div>
