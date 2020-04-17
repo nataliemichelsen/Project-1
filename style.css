@@ -161,3 +161,26 @@ transition:box-shadow 2s, width 2s, height 2s;
   color: red;
   text-align: center;
 }
+
+.company-info {
+  background: #fff;
+  display: block;
+}
+
+.graph {
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: white;
+}
+
+#addFavorite {
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  float:right;
+  font-size: x-large;
+  margin: 5px 5px 0px 0px;
+  background-color: #6c2a7f;
+  color: #fff
+}
