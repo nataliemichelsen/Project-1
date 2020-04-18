@@ -184,3 +184,13 @@ transition:box-shadow 2s, width 2s, height 2s;
   background-color: #6c2a7f;
   color: #fff
 }
+
+.clearFavorites {
+  background-color: #6c2a7f;
+  width: 50%;
+  align-content: center;
+  padding: 10px;
+  margin-bottom: 14px;
+  border: 0;
+  color: white;
+}

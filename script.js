@@ -9,8 +9,8 @@ function getNews() {
     method: "GET"
   }).then(function (resp) {
     console.log(resp)
-    for(var i=0; i<resp.articles.length; i++){
-      if(resp.articles[i].urlToImage !== null){
+    for (var i = 0; i < resp.articles.length; i++) {
+      if (resp.articles[i].urlToImage !== null) {
         var article = $(`<a href="${resp.articles[i].url}" target="_blank">
         <div class="newsArticle">
         <img class="thumbnail" width="180" src="${resp.articles[i].urlToImage}"/>
@@ -30,21 +30,21 @@ function getNews() {
 function getTopThree() {
   var key = '0OGUB3H5NFMSGVIS'
   var comp;
-  if(localStorage.getItem("companies") !== null){
+  if (localStorage.getItem("companies") !== null) {
     comp = JSON.parse(localStorage.getItem("companies"));
     console.log(comp)
-  }else{
+  } else {
     comp = ["DJI", "NDAQ", "GSPC"];
   }
 
   var savedTimestamp = 0;
-  if(localStorage.getItem("timeout") !== null){
+  if (localStorage.getItem("timeout") !== null) {
     savedTimestamp = localStorage.getItem("timeout");
   }
   for (let i in comp) {
-    if(Date.now() > savedTimestamp){
+    if (Date.now() > savedTimestamp) {
       localStorage.setItem("timeout", (Date.now() + 900000));
-      var topURL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + comp[i] + "&apikey=" + key ;
+      var topURL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + comp[i] + "&apikey=" + key;
       $.ajax({
         url: topURL,
         method: "GET"
@@ -56,7 +56,7 @@ function getTopThree() {
           console.log("new", stockPerformace);
           saveTopThree(company, stockPrice, stockPerformace);
           var myClass = "up";
-          if(stockPerformace.startsWith("-")){
+          if (stockPerformace.startsWith("-")) {
             myClass = "down";
           }
           $("#listCompany").append(`<div class="col s4 m4 l4">
@@ -68,18 +68,18 @@ function getTopThree() {
               </div>
             </div>
           </div>`);
-        } 
+        }
       }).catch(function (error) {
         console.log(error);
       });
-    }else{
-      prices = JSON.parse(localStorage.getItem("prices"));
-      performances = JSON.parse(localStorage.getItem("performances"));
+    } else {
+      prices = JSON.parse(localStorage.getItem("prices")) || [];
+      performances = JSON.parse(localStorage.getItem("performances")) || [];
       console.log("prices " + prices + " perf " + performances);
       var stockPrice = prices[i];
       var stockPerformace = performances[i];
       var myClass = "up";
-      if(stockPerformace.startsWith("-")){
+      if (stockPerformace && stockPerformace.startsWith("-")) {
         myClass = "down";
       }
       $("#listCompany").append(`<div class="col s4 m4 l4">
@@ -91,7 +91,7 @@ function getTopThree() {
           </div>
         </div>
       </div>`);
-    } 
+    }
   }
 }
 
@@ -99,7 +99,7 @@ function getTopThree() {
 var companies = [];
 var prices = [];
 var performances = [];
-function saveTopThree(company, price, performance){
+function saveTopThree(company, price, performance) {
   companies.push(company);
   prices.push(price);
   performances.push(performance);
@@ -109,24 +109,27 @@ function saveTopThree(company, price, performance){
 }
 
 function getStockInfo(stock, name) {
+  console.log("getStockInfo")
   var name = unescape(name);
+  console.log(name)
   var stockData = [];
   var stockURL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stock}&interval=30min&outputsize=compact&apikey=${key}`
   $.ajax({
     url: stockURL,
     method: "GET"
   }).then(function (resp) {
+    console.log(resp)
     if (resp.Note === undefined) {
-      $("#addFavorite").click(function(){
+      $("#addFavorite").click(function () {
         console.log(stock);
         let fav = stock + " " + name;
-        addToFavorite(fav);
+        addToFavorite(fav, stock, name);
       });
       $("#company-name").text(`(${stock})  ${name}`);
-      for(let i = 0; i < 13; i++){
+      for (let i = 0; i < 13; i++) {
         let day = Object.entries(resp["Time Series (30min)"])[i][0];
         let today = Object.entries(resp["Time Series (30min)"])[0][0].split(" ")[0];
-        if(day.startsWith(today)){
+        if (day.startsWith(today)) {
           hour = Object.entries(resp["Time Series (30min)"])[i][1];
           stockData.push(Object.entries(hour)[0][1]);
         }
@@ -140,32 +143,32 @@ function getStockInfo(stock, name) {
   });
 }
 
-function graph(data){
+function graph(data) {
   // data.push(1000);
   var ctx = document.getElementById('graph').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['9AM', '10AM', '11AM', '12AM', '1PM', '2PM', '3PM'],
-            datasets: [{
-                label: 'Price in U.S. dollar',
-                data: data,
-                backgroundColor: [
-                    'rgba(108,	42,	127, 0.75)',
-                    'rgba(108, 42, 127, 0, 1)',
-                    'rgba(108, 42, 127, 0, 1)',
-                    'rgba(108, 42, 127, 0, 1)',
-                    'rgba(108, 42, 127, 0, 1)',
-                    'rgba(108, 42, 127, 0, 1)',
-                    'rgba(108, 42, 127, 0, 1)',
-                ],
-                borderWidth: 1,
-            }]
-        }
-    });
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['9AM', '10AM', '11AM', '12AM', '1PM', '2PM', '3PM'],
+      datasets: [{
+        label: 'Price in U.S. dollar',
+        data: data,
+        backgroundColor: [
+          'rgba(108,	42,	127, 0.75)',
+          'rgba(108, 42, 127, 0, 1)',
+          'rgba(108, 42, 127, 0, 1)',
+          'rgba(108, 42, 127, 0, 1)',
+          'rgba(108, 42, 127, 0, 1)',
+          'rgba(108, 42, 127, 0, 1)',
+          'rgba(108, 42, 127, 0, 1)',
+        ],
+        borderWidth: 1,
+      }]
+    }
+  });
 }
 
-function addToFavorite(item) {
+function addToFavorite(item, stock, name) {
   if (item !== null && item !== "") {
     var favorites = [];
     var saved = JSON.parse(localStorage.getItem("favorites"));
@@ -175,15 +178,15 @@ function addToFavorite(item) {
       console.log("item", item);
       console.log("favorites", favorites);
       if (!favorites.includes(item)) {
-        let favoriteCompanies = `<a href="#!" class="collection-item">${item}</a>`
+        let favoriteCompanies = `<a href="#!" data-stock=${stock} data-name=${name} class="collection-item">${item}</a>`
         $("#favorites").append(favoriteCompanies);
-        favorites.push(item);
+        favorites.push({ item, stock, name });
       } else {
         console.log("item already exist");
       }
     } else {
       console.log("favorites are empty");
-      favorites.push(item);
+      favorites.push({ item, stock, name });
     }
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }
@@ -191,53 +194,61 @@ function addToFavorite(item) {
 
 
 function getFavorites() {
-  var favorites = JSON.parse(localStorage.getItem("favorites"));
+  var favorites = JSON.parse(localStorage.getItem("favorites")) || []; 
   if (favorites === null) {
     console.log("you have not favs");
   } else {
     for (let i in favorites) {
-      let favoriteCompanies = `<a href="#!" onclick="getStockInfo() class="collection-item">${favorites[i]}</a>`
+      let favoriteCompanies = `<a href="#!" data-stock=${favorites[i].stock} data-name=${favorites[i].name} class="collection-item">${favorites[i].item}</a>`
       $("#favorites").append(favoriteCompanies);
-      console.log("favorites",favorites[i]);
+      console.log("favorites", favorites[i]);
 
     }
   }
 }
 
-function getSearch(query){
+function getSearch(query) {
   $("#search-results").empty();
   $.ajax({
     url: `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${key}`,
     method: "GET"
   }).then(function (resp) {
     console.log(resp);
-    for(var i=0;i<Object.entries(resp.bestMatches).length;i++){
+    for (var i = 0; i < Object.entries(resp.bestMatches).length; i++) {
       let symbol = Object.entries(resp.bestMatches[i])[0][1];
       let name = escape(Object.entries(resp.bestMatches[i])[1][1]);
       $("#search-results").append(`<a href="#!" onclick="getStockInfo('${symbol}','${name}')" class="collection-item">(${symbol}) ${Object.entries(resp.bestMatches[i])[1][1]}</a>`);
     }
-    
+
   }).catch(function (error) {
     //console.log(error.statusText);
   });
 }
 
-// $(".collection-item").on(function() {
-// $("#collection").append(`<a href="#!" ${this}`)
-// });
+$(document).ready(function () {
 
-$( document ).ready(function() {
-  
   getNews();
   getTopThree();
   getStockInfo("DJIA", "Dow Jones Industerial Average");
   getFavorites();
-  $("#search-form").on("submit", function(event){
-      event.preventDefault();
-      var query = $("#stockSearch").val().trim().toLowerCase();
-      if(query !== null && query !== ""){
-        getSearch(query);
-      }
+  $("#search-form").on("submit", function (event) {
+    event.preventDefault();
+    var query = $("#stockSearch").val().trim().toLowerCase();
+    if (query !== null && query !== "") {
+      getSearch(query);
+    }
+  })
+  $(".collection-item").on("click", function (event) {
+    event.preventDefault();
+    let stock = $(this).data("stock")
+    let name = $(this).data("name")
+    console.log("on-click", stock, name)
+    getStockInfo(stock, name)
+  });
+  $(".clearFavorites").on("click", function () {
+    let empty = []
+    localStorage.setItem("favorites", JSON.stringify(empty))
+    $("#favorites").empty()
   })
 });
 
