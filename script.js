@@ -4,7 +4,7 @@ var gStockSymbol = null;
 var gStockName = null;
 
 function getNews() {
-  var newsURL = "http://newsapi.org/v2/top-headlines?country=us&pageSize=5&category=business&apiKey=803f9ad748be457e83fc9fa29df97188";
+  var newsURL = "https://newsapi.org/v2/top-headlines?country=us&pageSize=5&category=business&apiKey=803f9ad748be457e83fc9fa29df97188";
   $.ajax({
     url: newsURL,
     method: "GET"
