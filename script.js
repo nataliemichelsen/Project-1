@@ -50,9 +50,7 @@ function getTopThree() {
   }
 
   for (let i in comp) {
-    
     var companyName = getCompanyName(comp[i]);
-    console.log(companyName);
     if (Date.now() > savedTimestamp) {
       localStorage.setItem("timeout", (Date.now() + 900000));
       var topURL = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + comp[i] + "&apikey=" + key;
@@ -92,8 +90,6 @@ function getTopThree() {
       if (stockPerformace.startsWith("-")) {
         myClass = "down";
       }
-      
-      console.log(getCompanyName(comp[i]));
       $("#listCompany").append(`<div class="col s4 m4 l4">
         <div class="card">
           <a href="#!" onclick="getStockInfo('${comp[i]}', '${companyName}')" class="card-content">
@@ -124,15 +120,15 @@ function saveTopThree(company, price, performance) {
 function getStockInfo(stock, name) {
   var name = unescape(name);
   var stockData = [];
+  $("#addFavorite").click(function () {
+    addToFavorite(stock, name);
+  });
   var stockURL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stock}&interval=30min&outputsize=compact&apikey=${key}`
   $.ajax({
     url: stockURL,
     method: "GET"
   }).then(function (resp) {
     if (resp.Note === undefined) {
-      $("#addFavorite").click(function () {
-        addToFavorite(stock, name);
-      });
       $("#company-name").text(`(${stock})  ${name}`);
       for (let i = 0; i < 13; i++) {
         let day = Object.entries(resp["Time Series (30min)"])[i][0];
@@ -180,6 +176,7 @@ function addToFavorite(item, name) {
   if (item !== null && item !== "") {
     var favorites = [];
     var saved = JSON.parse(localStorage.getItem("favorites"));
+    console.log("saved", saved);
     console.log("favorites", favorites);
     if (saved !== null) {
       favorites = saved;
