@@ -183,15 +183,18 @@ function addToFavorite(item, name) {
     console.log("favorites", favorites);
     if (saved !== null) {
       favorites = saved;
+      var exist = false;
       console.log(item);
       for (i in favorites) {
-        if (!favorites[i].includes(item)) {
-          favorites.push([item, name]);
-          let favoriteCompanies = `<a href="#!" class="collection-item">(${item}) ${name}</a>`
-          $("#favorites").append(favoriteCompanies);
-        } else {
+        if (favorites[i].includes(item)) {
+          exist = true;
           console.log("item already exist");
         }
+      }
+      if(!exist){
+        favorites.push([item, name]);
+        let favoriteCompanies = `<a href="#!" class="collection-item">(${item}) ${name}</a>`
+        $("#favorites").append(favoriteCompanies);
       }
     } else {
       favorites.push([item, name]);
