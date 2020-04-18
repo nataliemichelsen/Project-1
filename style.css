@@ -3,18 +3,9 @@ body{
   margin-top: 14px;
   margin-bottom: 14px;
 }
+
 .collection-item{
   color: #6c2a7f;
-}
-/* .nav-button{
-  background-color: #6c2a7f;
-  width: 20%;
-  padding: 10px;
-  border: 0;
-  transition-duration: 0.8s;
-} */
-button:focus{
-    background-color: white;
 }
 
 .row {
@@ -183,4 +174,16 @@ transition:box-shadow 2s, width 2s, height 2s;
   margin: 5px 5px 0px 0px;
   background-color: #6c2a7f;
   color: #fff
+}
+
+.clearFavorites {
+  background-color: #6c2a7f;
+  padding: 10px;
+  margin-bottom: 14px;
+  border: 0;
+  color: white;
+}
+.clearFavorites:focus{
+  background-color: #6c2a7f;;
+  color: white;
 }
