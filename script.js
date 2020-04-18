@@ -216,7 +216,8 @@ function getFavorites() {
     console.log("you have not favs");
   } else {
     for (let i in favorites) {
-      let favoriteCompanies = `<a href="#!" onclick="getStockInfo('${favorites[i][0]}', '${favorites[i][1]}')" class="collection-item">(${favorites[i][0]}) ${favorites[i][1]}</a>`
+      let favName = unescape(favorites[i][1]);
+      let favoriteCompanies = `<a href="#!" onclick="getStockInfo('${favorites[i][0]}', '${favorites[i][1]}')" class="collection-item">(${favorites[i][0]}) ${favName}</a>`
       $("#favorites").append(favoriteCompanies);
     }
   }
