@@ -1,8 +1,10 @@
 var key = '0OGUB3H5NFMSGVIS'
 // wanted companies DJI, NDAQ, INX
+var gStockSymbol = null;
+var gStockName = null;
 
 function getNews() {
-  var newsURL = "https://newsapi.org/v2/top-headlines?country=us&pageSize=5&category=business&apiKey=803f9ad748be457e83fc9fa29df97188";
+  var newsURL = "http://newsapi.org/v2/top-headlines?country=us&pageSize=5&category=business&apiKey=803f9ad748be457e83fc9fa29df97188";
   $.ajax({
     url: newsURL,
     method: "GET"
@@ -118,11 +120,10 @@ function saveTopThree(company, price, performance) {
 }
 
 function getStockInfo(stock, name) {
+  gStockSymbol = stock;
+  gStockName = name;
   var name = unescape(name);
   var stockData = [];
-  $("#addFavorite").click(function () {
-    addToFavorite(stock, name);
-  });
   var stockURL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stock}&interval=30min&outputsize=compact&apikey=${key}`
   $.ajax({
     url: stockURL,
@@ -173,8 +174,8 @@ function graph(data) {
 }
 
 function addToFavorite(item, name) {
+  var favorites = [];
   if (item !== null && item !== "") {
-    var favorites = [];
     var saved = JSON.parse(localStorage.getItem("favorites"));
     console.log("saved", saved);
     console.log("favorites", favorites);
@@ -205,10 +206,11 @@ function addToFavorite(item, name) {
 
 
 function getFavorites() {
-  var favorites = null
+  var favorites = null;
   if(localStorage.getItem("favorites") !== null && localStorage.getItem("favorites") !== ""){
     favorites = JSON.parse(localStorage.getItem("favorites"));
   }
+  console.log("favs", favorites);
   if (favorites === null) {
     $(".clearFavorites").css("display", "none");
     console.log("you have not favs");
@@ -254,6 +256,10 @@ $(document).ready(function () {
   $(".clearFavorites").on("click", function () {
     localStorage.removeItem("favorites");
     $("#favorites").empty();
+  });
+
+  $(".addFavorite").click(function () {
+    addToFavorite(gStockSymbol, gStockName);
   });
 });
 

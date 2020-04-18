@@ -165,7 +165,7 @@ transition:box-shadow 2s, width 2s, height 2s;
   background: white;
 }
 
-#addFavorite {
+.addFavorite {
   border-radius: 50%;
   height: 45px;
   width: 45px;
