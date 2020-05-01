@@ -3,7 +3,7 @@ var gStockSymbol = null;
 var gStockName = null;
 
 function getNews() {
-  var newsURL = "http://newsapi.org/v2/top-headlines?country=us&pageSize=5&category=business&apiKey=803f9ad748be457e83fc9fa29df97188";
+  var newsURL = "https://newsapi.org/v2/top-headlines?country=us&pageSize=5&category=business&apiKey=803f9ad748be457e83fc9fa29df97188";
   $.ajax({
     url: newsURL,
     method: "GET"
@@ -214,7 +214,8 @@ function getFavorites() {
     console.log("you have not favs");
   } else {
     for (let i in favorites) {
-      let favoriteCompanies = `<a href="#!" onclick="getStockInfo('${favorites[i][0]}', '${favorites[i][1]}')" class="collection-item">(${favorites[i][0]}) ${favorites[i][1]}</a>`
+      let favName = unescape(favorites[i][1]);
+      let favoriteCompanies = `<a href="#!" onclick="getStockInfo('${favorites[i][0]}', '${favorites[i][1]}')" class="collection-item">(${favorites[i][0]}) ${favName}</a>`
       $("#favorites").append(favoriteCompanies);
     }
   }
