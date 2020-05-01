@@ -7,7 +7,7 @@
   <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="materialize.css" media="screen,projection" />
+  <link rel="stylesheet" href="Assets/materialize.css" media="screen,projection" />
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,55 +16,40 @@
 </head>
 
 <body>
-    <!-- <nav>
-      <div class="nav-wrapper">
-        
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
-      </div>
-    </nav> -->
-    <div class="container">
+
+  <div class="container">
     <div class="row">
       <aside class="col s4 md3 l3 aside">
         <div class="logo">
-          <span/>
+          <span />
         </div>
         <form id="search-form">
           <input type="search" id="stockSearch" placeholder="Search">
           <button class="btn waves-effect waves-dark" type="submit" name="action">Search
-          <i class="material-icons right">search</i>
-        </button>
-      </form>
+            <i class="material-icons right">search</i>
+          </button>
+        </form>
         <div id="search-results" class="collection">
         </div>
         <h4>Your Favorites</h4>
         <div id="favorites" class="collection">
-          
+
         </div>
         <button class="clearFavorites">Clear Favorites</button>
       </aside>
-      
+
       <main class="col s8 md9 l9">
-        <!-- <div class="top3">
-          <button class="nav-button">top 3</button>
-          <button class="nav-button">favorite</button>
-        </div> -->
+
         <div id="listCompany" class="row">
-          
+
         </div>
-          <div class="company-info">
-            <button class="addFavorite" title="Add to favorite">+</button>
-            <h4 id="company-name"></h4>
-            <canvas id="graph" class="graph"></canvas>
-          </div>
+        <div class="company-info">
+          <button class="addFavorite" title="Add to favorite">+</button>
+          <h4 id="company-name"></h4>
+          <canvas id="graph" class="graph"></canvas>
+        </div>
         <div class="news">
           <h3>Financial News</h3>
-          <!-- <div class="container"> -->
-
-          <!-- </div> -->
 
         </div>
       </main>

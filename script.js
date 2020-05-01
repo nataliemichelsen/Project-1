@@ -1,5 +1,4 @@
 var key = '0OGUB3H5NFMSGVIS'
-// wanted companies DJI, NDAQ, INX
 var gStockSymbol = null;
 var gStockName = null;
 
@@ -13,7 +12,7 @@ function getNews() {
       if (resp.articles[i].urlToImage !== null) {
         var article = $(`<a href="${resp.articles[i].url}" target="_blank">
         <div class="newsArticle">
-        <img class="thumbnail" width="180" src="${resp.articles[i].urlToImage}"/>
+        <img class="thumbnail" height="100" width="180" src="${resp.articles[i].urlToImage}"/>
         <p class="p">${resp.articles[i].title}<br/>
         <span class="time">Published on ${resp.articles[i].publishedAt} <br/>By: ${resp.articles[i].author}</span></p>
         </div></a>`);
@@ -38,16 +37,16 @@ function getTopThree() {
   }
 
   function getCompanyName(symbol) {
-    switch(symbol){
-      case "DJIA": 
-      return "Dow Jones Industrial Average";
-      break;
-      case "NDAQ": 
-      return "NASDAQ";
-      break;
-      case "INX": 
-      return "S&P 500";
-      break;
+    switch (symbol) {
+      case "DJIA":
+        return "Dow Jones Industrial Average";
+        break;
+      case "NDAQ":
+        return "NASDAQ";
+        break;
+      case "INX":
+        return "S&P 500";
+        break;
     }
   }
 
@@ -149,7 +148,6 @@ function getStockInfo(stock, name) {
 }
 
 function graph(data) {
-  // data.push(1000);
   var ctx = document.getElementById('graph').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
@@ -189,7 +187,7 @@ function addToFavorite(item, name) {
           console.log("item already exist");
         }
       }
-      if(!exist){
+      if (!exist) {
         favorites.push([item, name]);
         let favoriteCompanies = `<a href="#!" class="collection-item">(${item}) ${name}</a>`
         $("#favorites").append(favoriteCompanies);
@@ -207,7 +205,7 @@ function addToFavorite(item, name) {
 
 function getFavorites() {
   var favorites = null;
-  if(localStorage.getItem("favorites") !== null && localStorage.getItem("favorites") !== ""){
+  if (localStorage.getItem("favorites") !== null && localStorage.getItem("favorites") !== "") {
     favorites = JSON.parse(localStorage.getItem("favorites"));
   }
   console.log("favs", favorites);
@@ -236,7 +234,6 @@ function getSearch(query) {
     }
 
   }).catch(function (error) {
-    //console.log(error.statusText);
   });
 }
 
@@ -262,8 +259,3 @@ $(document).ready(function () {
     addToFavorite(gStockSymbol, gStockName);
   });
 });
-
-
-
-
-  // getFavorites("IBM");
